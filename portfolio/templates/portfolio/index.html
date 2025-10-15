@@ -1,18 +1,77 @@
-{% extends 'portfolio/layout.html'%}
-
+{% extends 'portfolio/layout.html' %}
 {% block content %}
-  <!-- ====== HERO / HOME ====== -->
-  <section class="hero">
-    <div class="container">
-      <h1>Hi, I’m <strong>Aashish Mali</strong> 👋</h1>
-      <p>Python Developer | Flask | REST API | MySQL</p>
-      <a href="#projects" class="btn btn-dark mt-3 me-2">View My Projects</a>
-      <a href="#contact" class="btn btn-outline-dark mt-3">Contact Me</a>
-      <div class="mt-4">
-        <a href="mailto:aashish.d.mali@gmail.com" class="text-white me-3"><i class="fa-solid fa-envelope"></i></a>
-        <a href="https://linkedin.com/in/maliashish98" target="_blank" class="text-white me-3"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/maliashish98" target="_blank" class="text-white"><i class="fa-brands fa-github"></i></a>
+
+<!-- ====== HERO / HOME ====== -->
+<section id="home" class="min-h-screen flex items-center justify-center bg-black text-white">
+  <div class="text-center px-4">
+    <h1 class="text-5xl font-bold mb-4">Hi, I'm <strong>Aashish Mali</strong></h1>
+    <p class="text-xl">Python Developer | Web Enthusiast | Problem Solver</p>
+  </div>
+</section>
+
+<!-- ====== ABOUT ====== -->
+<section id="about" class="py-20 bg-white text-gray-900">
+  <div class="container mx-auto px-6 md:px-20">
+    <h2 class="text-4xl font-bold text-center mb-8">About Me</h2>
+    <p class="max-w-3xl mx-auto text-center text-lg">
+      Python developer with 4+ years of experience building scalable web applications. Skilled in Flask, Django, and web technologies. Passionate about clean code, debugging, and delivering high-quality software.
+    </p>
+  </div>
+</section>
+
+<!-- ====== SKILLS ====== -->
+<section id="skills" class="py-20 bg-gray-100">
+  <div class="container mx-auto px-6 md:px-20">
+    <h2 class="text-4xl font-bold text-center mb-8">Skills</h2>
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <!-- skill card starts here -->
+       {% for skill in skills %}
+      <div>
+        <img class="rounded-full w-10 h-10" src="{{ skill.logo.url }}" alt="skill_image">
+        <p class="mb-2 font-semibold">{{ skill.name }}</p>
+        <div class="w-full bg-gray-300 rounded-full h-4 mb-4">
+          <div id="skill_logo" class="bg-black h-4 rounded-full" style="width:{{ skill.proficiency }}%"></div>
+        </div>
       </div>
+      {% endfor %}
+      <!-- skill card ends here -->
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- ====== PROJECTS ====== -->
+<section id="projects" class="py-20 bg-white">
+  <div class="container mx-auto px-6 md:px-20">
+    <h2 class="text-4xl font-bold text-center mb-8">Projects</h2>
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <!-- Project cards starts here -->
+       {% for project in projects %}
+      <div class="bg-gray-900 text-white p-6 rounded-lg shadow-lg hover:scale-105 transform transition">
+        <div class="w-50 h-30">
+          <img class="transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0" src="{{ project.image.url }}" alt="project image">
+        </div>
+        <h5 class="text-xl font-bold mb-2">{{ project.title }}</h5>
+        <p>{{ project.description }}</p>
+        <a href="{{ project.githublink }}">Github</a>
+        <a href="{{ project.livelink }}">Live</a>
+      </div>
+      {% endfor %}
+      <!-- Project cards ends here -->
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section id="contact" class="py-20 bg-gray-100">
+  <div class="container mx-auto px-6 md:px-20 max-w-2xl">
+    <h2 class="text-4xl font-bold text-center mb-8">Contact Me</h2>
+    <form class="space-y-4">
+      <input type="text" placeholder="Name" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black">
+      <input type="email" placeholder="Email" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black">
+      <textarea placeholder="Message" rows="5" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+      <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full">Send Message</button>
+    </form>
+  </div>
+</section>
+
 {% endblock %}
