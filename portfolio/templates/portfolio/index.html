@@ -65,10 +65,24 @@
 <section id="contact" class="py-20 bg-gray-100">
   <div class="container mx-auto px-6 md:px-20 max-w-2xl">
     <h2 class="text-4xl font-bold text-center mb-8">Contact Me</h2>
-    <form class="space-y-4">
-      <input type="text" placeholder="Name" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black">
-      <input type="email" placeholder="Email" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black">
-      <textarea placeholder="Message" rows="5" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"></textarea>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="text-center mb-4 text-lg {% if message.tags == 'success' %}text-green-600{% else %}text-red-600{% endif %}">
+    {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <input type="text" name="name" placeholder="Name" value="{{ form.name.value|default_if_none:'' }}"
+             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
+      <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}"
+             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
+      <textarea name="message" placeholder="Message" rows="5"
+             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>{{ form.message.value|default_if_none:'' }}</textarea>
       <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full">Send Message</button>
     </form>
   </div>
