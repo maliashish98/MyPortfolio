@@ -4,17 +4,43 @@
 <!-- ====== HERO / HOME ====== -->
 <section id="home" class="min-h-screen flex items-center justify-center bg-black text-white">
   <div class="text-center px-4">
-    <h1 class="text-5xl font-bold mb-4">Hi, I'm <strong>Aashish Mali</strong></h1>
-    <p class="text-xl">Python Developer | Web Enthusiast | Problem Solver</p>
+    <h1 class="text-5xl font-bold mb-4">
+      Hi, I'm <strong>Aashish Mali</strong>
+    </h1>
+    <p class="text-xl mb-8">
+      Python Developer | Web Enthusiast | Problem Solver
+    </p>
+
+    {% if resume and resume.file_url %}
+    <div class="flex justify-center gap-4">
+      <!-- Download CV -->
+      <a href="{{ resume.file_url }}" 
+         download
+         class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-medium rounded-xl shadow-md hover:bg-gray-200 transition">
+        <i class="fas fa-download"></i> Download CV
+      </a>
+
+      <!-- View CV Online -->
+      <a href="{{ resume.file_url }}" 
+         target="_blank"
+         class="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-white text-white font-medium rounded-xl hover:bg-white hover:text-black transition">
+        <i class="fas fa-eye"></i> View CV Online
+      </a>
+    </div>
+    {% else %}
+    <p class="text-sm text-gray-400 mt-4">CV not available yet</p>
+    {% endif %}
   </div>
 </section>
+
 
 <!-- ====== ABOUT ====== -->
 <section id="about" class="py-20 bg-white text-gray-900">
   <div class="container mx-auto px-6 md:px-20">
     <h2 class="text-4xl font-bold text-center mb-8">About Me</h2>
     <p class="max-w-3xl mx-auto text-center text-lg">
-      Python developer with 4+ years of experience building scalable web applications. Skilled in Flask, Django, and web technologies. Passionate about clean code, debugging, and delivering high-quality software.
+      Python developer with 4+ years of experience building scalable web applications. Skilled in Flask, Django, and web
+      technologies. Passionate about clean code, debugging, and delivering high-quality software.
     </p>
   </div>
 </section>
@@ -25,7 +51,7 @@
     <h2 class="text-4xl font-bold text-center mb-8">Skills</h2>
     <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
       <!-- skill card starts here -->
-       {% for skill in skills %}
+      {% for skill in skills %}
       <div>
         <img class="rounded-full w-10 h-10" src="{{ skill.logo_url }}" alt="{{skill.name}}">
         <p class="mb-2 font-semibold">{{ skill.name }}</p>
@@ -45,10 +71,11 @@
     <h2 class="text-4xl font-bold text-center mb-8">Projects</h2>
     <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
       <!-- Project cards starts here -->
-       {% for project in projects %}
+      {% for project in projects %}
       <div class="bg-gray-900 text-white p-6 rounded-lg shadow-lg hover:scale-105 transform transition">
         <div class="w-50 h-30">
-          <img class="transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0" src="{{ project.image_url }}" alt="project image">
+          <img class="transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0"
+            src="{{ project.image_url }}" alt="project image">
         </div>
         <h5 class="text-xl font-bold mb-2">{{ project.title }}</h5>
         <p>{{ project.description }}</p>
@@ -68,8 +95,9 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div class="text-center mb-4 text-lg {% if message.tags == 'success' %}text-green-600{% else %}text-red-600{% endif %}">
-    {{message}}
+    <div
+      class="text-center mb-4 text-lg {% if message.tags == 'success' %}text-green-600{% else %}text-red-600{% endif %}">
+      {{message}}
     </div>
     {% endfor %}
     {% endif %}
@@ -78,12 +106,14 @@
       {% csrf_token %}
       {{ form.non_field_errors }}
       <input type="text" name="name" placeholder="Name" value="{{ form.name.value|default_if_none:'' }}"
-             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
+        class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
       <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}"
-             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
+        class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>
       <textarea name="message" placeholder="Message" rows="5"
-             class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black" required>{{ form.message.value|default_if_none:'' }}</textarea>
-      <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full">Send Message</button>
+        class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
+        required>{{ form.message.value|default_if_none:'' }}</textarea>
+      <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full">Send
+        Message</button>
     </form>
   </div>
 </section>

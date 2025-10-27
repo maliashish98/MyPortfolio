@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 #Skills Model
@@ -45,3 +46,26 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.email}"
+
+
+ #Resume Model
+class Resume(models.Model):
+    title = models.CharField(max_length=100, default='Aashish Mali - Resume')
+    file = models.FileField(upload_to='resumes/')   
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Resume.objects.exists():
+            raise ValidationError("Only one resume can exist at a time. Please delete the old one before uploading a new one.")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Resume uploaded on {self.uploaded_at.strftime('%Y-%m-%d')}"
+    
+    @property
+    def file_url(self):
+        if self.file and hasattr(self.file,'url'):
+            return self.file.url
+        return None
+    
+    

@@ -2,13 +2,14 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Skill,Project
+from .models import Skill,Project,Resume
 from .forms import ContactForm
 
 # Create your views here.
 def index(request):
     skills = Skill.objects.all()
     projects = Project.objects.all()
+    resume = Resume.objects.last()
 
     #handel contact form submission
     if request.method == "POST":
@@ -31,6 +32,7 @@ def index(request):
     contexts = {
         'skills':skills,
         'projects':projects,
-        'form':form
+        'form':form,
+        'resume':resume
     }
     return render(request, 'portfolio/index.html', contexts)
