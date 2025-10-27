@@ -9,6 +9,12 @@ class Skill(models.Model):
     logo = models.ImageField(upload_to='logos/',blank=True,null=True)
     created_on = models.DateTimeField(default=timezone.now)
 
+    @property
+    def logo_url(self):
+        if self.logo and hasattr(self.logo,'url'):
+            return self.logo.url
+        return '/static/portfolio/images/default-skill-image.png'
+
     def __str__(self):
         return self.name
 
@@ -21,6 +27,12 @@ class Project(models.Model):
     image = models.ImageField(upload_to='projects/',blank=True, null=True)
     created_on = models.DateTimeField(default=timezone.now)
 
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image,'url'):
+            return self.image.url
+        return '/static/portfolio/images/default-project-image.png'
+    
     def __str__(self):
         return self.title
     
